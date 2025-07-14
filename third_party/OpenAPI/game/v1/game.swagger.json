@@ -1,0 +1,243 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "game/v1/game.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "GameService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {},
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Ball": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "$ref": "#/definitions/v1Position"
+        },
+        "velocity": {
+          "$ref": "#/definitions/v1Velocity"
+        }
+      }
+    },
+    "v1CreateRoomResponse": {
+      "type": "object",
+      "properties": {
+        "roomId": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "v1GameState": {
+      "type": "object",
+      "properties": {
+        "roomId": {
+          "type": "string"
+        },
+        "players": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Player"
+          }
+        },
+        "ball": {
+          "$ref": "#/definitions/v1Ball"
+        },
+        "score": {
+          "$ref": "#/definitions/v1Score"
+        },
+        "status": {
+          "$ref": "#/definitions/v1GameStatus"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "int64"
+        }
+      },
+      "title": "Game state messages"
+    },
+    "v1GameStatus": {
+      "type": "string",
+      "enum": [
+        "GAME_STATUS_UNSPECIFIED",
+        "GAME_STATUS_WAITING",
+        "GAME_STATUS_START",
+        "GAME_STATUS_PLAYING",
+        "GAME_STATUS_PAUSED",
+        "GAME_STATUS_FINISHED"
+      ],
+      "default": "GAME_STATUS_UNSPECIFIED"
+    },
+    "v1GetRoomStateResponse": {
+      "type": "object",
+      "properties": {
+        "gameState": {
+          "$ref": "#/definitions/v1GameState"
+        },
+        "exists": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1InputType": {
+      "type": "string",
+      "enum": [
+        "INPUT_TYPE_UNSPECIFIED",
+        "INPUT_TYPE_PADDLE_MOVE",
+        "INPUT_TYPE_READY",
+        "INPUT_TYPE_PAUSE"
+      ],
+      "default": "INPUT_TYPE_UNSPECIFIED"
+    },
+    "v1JoinRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "string"
+        },
+        "gameState": {
+          "$ref": "#/definitions/v1GameState"
+        }
+      }
+    },
+    "v1LeaveRoomResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1Player": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "paddle": {
+          "$ref": "#/definitions/v1Position"
+        },
+        "playerNumber": {
+          "type": "integer",
+          "format": "int32",
+          "title": "1 or 2"
+        },
+        "ready": {
+          "type": "boolean"
+        }
+      }
+    },
+    "v1PlayerInput": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/v1InputType"
+        },
+        "value": {
+          "type": "number",
+          "format": "float",
+          "title": "For paddle movement: -1 (up), 0 (stop), 1 (down)"
+        }
+      }
+    },
+    "v1Position": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "format": "float"
+        },
+        "y": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "v1Score": {
+      "type": "object",
+      "properties": {
+        "player1": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "player2": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "v1UpdatePlayerInputResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "v1Velocity": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "format": "float"
+        },
+        "y": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    }
+  }
+}
