@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package game.v1;
+
+option go_package = "github.com/baohuamap/pongo";
+
+// Game service for managing rooms and players
+service GameService {
+    rpc CreateRoom(CreateRoomRequest) returns (CreateRoomResponse);
+    rpc JoinRoom(JoinRoomRequest) returns (JoinRoomResponse);
+    rpc LeaveRoom(LeaveRoomRequest) returns (LeaveRoomResponse);
+    rpc GetRoomState(GetRoomStateRequest) returns (GetRoomStateResponse);
+    rpc UpdatePlayerInput(UpdatePlayerInputRequest) returns (UpdatePlayerInputResponse);
+}
+
+message CreateRoomRequest {
+    string player_id = 1;
+    string player_name = 2;
+}
+
+message CreateRoomResponse {
+    string room_id = 1;
+    bool success = 2;
+    string error = 3;
+}
+
+message JoinRoomRequest {
+    string room_id = 1;
+    string player_id = 2;
+    string player_name = 3;
+}
+
+message JoinRoomResponse {
+    bool success = 1;
+    string error = 2;
+    GameState game_state = 3;
+}
+
+message LeaveRoomRequest {
+    string room_id = 1;
+    string player_id = 2;
+}
+
+message LeaveRoomResponse {
+    bool success = 1;
+}
+
+message GetRoomStateRequest {
+    string room_id = 1;
+}
+
+message GetRoomStateResponse {
+    GameState game_state = 1;
+    bool exists = 2;
+}
+
+message UpdatePlayerInputRequest {
+    string room_id = 1;
+    string player_id = 2;
+    PlayerInput input = 3;
+}
+
+message UpdatePlayerInputResponse {
+    bool success = 1;
+    string error = 2;
+}
+
+// Game state messages
+message GameState {
+    string room_id = 1;
+    repeated Player players = 2;
+    Ball ball = 3;
+    Score score = 4;
+    GameStatus status = 5;
+    int64 timestamp = 6;
+}
+
+message Player {
+    string id = 1;
+    string name = 2;
+    Position paddle = 3;
+    int32 player_number = 4; // 1 or 2
+    bool ready = 5;
+}
+
+message Ball {
+    Position position = 1;
+    Velocity velocity = 2;
+}
+
+message Position {
+    float x = 1;
+    float y = 2;
+}
+
+message Velocity {
+    float x = 1;
+    float y = 2;
+}
+
+message Score {
+    int32 player1 = 1;
+    int32 player2 = 2;
+}
+
+message PlayerInput {
+    InputType type = 1;
+    float value = 2; // For paddle movement: -1 (up), 0 (stop), 1 (down)
+}
+
+enum InputType {
+    INPUT_TYPE_UNSPECIFIED = 0;
+    INPUT_TYPE_PADDLE_MOVE = 1;
+    INPUT_TYPE_READY = 2;
+    INPUT_TYPE_PAUSE = 3;
+}
+
+enum GameStatus {
+    GAME_STATUS_UNSPECIFIED = 0;
+    GAME_STATUS_WAITING = 1;
+    GAME_STATUS_START = 2;
+    GAME_STATUS_PLAYING = 3;
+    GAME_STATUS_PAUSED = 4;
+    GAME_STATUS_FINISHED = 5;
+}
