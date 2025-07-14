@@ -104,7 +104,7 @@
       "enum": [
         "GAME_STATUS_UNSPECIFIED",
         "GAME_STATUS_WAITING",
-        "GAME_STATUS_START",
+        "GAME_STATUS_READY",
         "GAME_STATUS_PLAYING",
         "GAME_STATUS_PAUSED",
         "GAME_STATUS_FINISHED"
