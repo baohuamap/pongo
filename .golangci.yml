@@ -1,0 +1,53 @@
+version: "2"
+
+run:
+  timeout: 3m
+  tests: false
+
+linters:
+  enable:
+    - asciicheck
+    - bodyclose
+    - copyloopvar
+    - dogsled
+    - durationcheck
+    - errorlint
+    - ginkgolinter
+    - gosec
+    - importas
+    - misspell
+    - nakedret
+    - nolintlint
+    - revive
+    - testifylint
+    - unconvert
+    - unparam
+    - wastedassign
+  settings:
+    revive:
+      rules:
+        - name: dot-imports
+          disabled: true
+        - name: filename-format
+          arguments:
+            - ^[a-z][_a-z0-9]*.go$
+        - name: redefines-builtin-id
+    staticcheck:
+      checks:
+        - all
+        - -SA1019
+        - -ST1000
+    testifylint:
+      enable-all: true
+formatters:
+  enable:
+    - gci
+    - gofmt
+    - gofumpt
+    - goimports
+  settings:
+    gci:
+      sections:
+        - standard
+        - default
+        - prefix(github.com/dnanexus/pfda-high-cloud)

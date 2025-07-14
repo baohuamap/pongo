@@ -1,0 +1,34 @@
+{
+  "window.zoomLevel": 1,
+  "editor.formatOnSave": false,
+  "json.format.enable": true,
+  "editor.tabSize": 4,
+  "editor.insertSpaces": true,
+
+  "go.inferGopath": false,
+  "go.lintOnSave": "package",
+  "go.vetOnSave": "package",
+  "go.buildFlags": [ ],
+  "go.vetFlags": [ ],
+  "go.coverOnSave": false,
+  "go.formatTool": "custom",
+  "go.alternateTools": {
+    "customFormatter": "golangci-lint"
+  },
+  "go.useLanguageServer": true,
+  "go.lintTool": "golangci-lint",
+  "go.lintFlags": [
+    "--path-mode=abs",
+    "--fast-only"
+  ],
+  "go.formatFlags": [
+    "fmt",
+    "--stdin"
+  ],
+  "[go]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+  },
+
+}

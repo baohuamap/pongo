@@ -1,0 +1,16 @@
+# Pre-push hook to check if `go mod tidy` has been run
+
+# Run go mod tidy
+go mod tidy || exit 1
+
+# Check if go.mod or go.sum have changed
+git diff --exit-code go.mod go.sum &> /dev/null
+
+if [ $? -eq 1 ]; then
+  echo "Error: go.mod or go.sum is not tidy."
+  echo "Please run 'go mod tidy' and commit the changes before pushing."
+  exit 1
+fi
+
+# Allow push if everything is tidy
+exit 0
